@@ -2,7 +2,7 @@
   background-color: #35383e;
   position: relative;
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
   font-family: "Montserrat", sans-serif;
 }
 
