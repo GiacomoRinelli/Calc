@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Container,  } from 'react-bootstrap';
+
 
 const App = () => {
   //Consts
@@ -36,8 +39,8 @@ const App = () => {
             <option>-</option>
           </select>
           <input placeholder="input number"></input>
-          <button className="bg__btn">Delete</button>
-          <button className="bg__btn">Disable</button>
+          <Button className="bg__btn">Delete</Button>
+          <Button className="bg__btn">Disable</Button>
         </div>
       ))}
 
