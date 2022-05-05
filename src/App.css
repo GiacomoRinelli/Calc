@@ -6,25 +6,62 @@
   font-family: "Montserrat", sans-serif;
 }
 
-.bg button {
+.title {
+  font-size: 18px;
+  text-align: center;
+  color: white;
+  background-color: #383636;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid;
+  margin-top: 1rem;
+  width: 16rem;
+  margin: 1rem auto;
+}
+
+.line {
+  display: flex;
+  justify-content: space-around;
+  color: rgb(11, 14, 14);
+  padding: 1.5rem;
+  background-color: rgb(255, 255, 255);
+  margin: 1.5rem auto;
+  width: 40rem;
+  max-width: 95%;
+  border-radius: 12px;
+}
+
+.bg__btn {
   font: inherit;
   cursor: pointer;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   border: 1px solid #504d4d;
-  background-color: #000000;
+  background-color: #383636;
   color: white;
   border-radius: 12px;
   margin-left: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.4rem;
 }
 
-.result {
+.bg__addRowBtn {
+  font: inherit;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  border: 1px solid #504d4d;
+  background-color: #c6c3c3;
+  color: rgb(73, 70, 70);
+  border-radius: 12px;
+  margin-left: 1rem;
+  margin-top: 0.4rem;
+}
+
+.bg__result {
   font-weight: bold;
   color: rgb(11, 14, 14);
-  padding: 2rem;
+  padding: 1rem;
   background-color: rgb(255, 255, 255);
   margin: 3rem auto;
-  width: 5rem;
+  width: 12rem;
   max-width: 95%;
   border-radius: 12px;
 }
