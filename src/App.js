@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
@@ -7,6 +7,7 @@ const App = () => {
   //Consts
   const [rows, setRows] = useState([
     {
+      op: 0,
       num: " ",
       off: false,
     },
@@ -16,7 +17,8 @@ const App = () => {
 
   const rowAddHandler = () => {
     var newRow = {
-      num: 0,
+      op: 0,
+      num: ' ',
       off: false,
     };
 
@@ -24,25 +26,30 @@ const App = () => {
   };
 
   const valChangeHandler = (v, i) => {
-    var newRows = [...rows];
-    var newRow = { ...newRows[i], num: v };
+    let newRows = [...rows];
+    let newRow = { ...newRows[i], num: v };
     newRow[i] = newRow;
     setRows(newRows);
-    calcSum(rows); //ogni qualvolta cambia il valore in input, aggiorno il risultato
+    //calcSum(rows);
   };
 
-  const calcSum = (r) => {
-    var i,
-      tot = 0;
-
-    /* Potevo usare un foreach, ma volevo essere sicuro che faceva esattamente ciò che chiedevo */
-
-    for (i = 0; i < r.length; i++) {
-      tot += r.num;
+ /* const calcSum = (rows) => {
+    let i, tot=0;
+    for(i=0; i<(rows.length); i++) {
+      tot += rows.num;
     }
-
     setSum(tot);
-  };
+  }; */
+
+  useEffect(() => {
+    let tot = 0;
+    rows.forEach((r) => {
+      tot += r.num;
+    });
+    setSum(tot);
+  }, [rows]);
+
+  
 
   return (
     <div className="bg">
@@ -61,7 +68,7 @@ const App = () => {
             <option>-</option>
           </select>
           <input
-            type="number"
+            type= 'number'
             onChange={(event) => valChangeHandler(event.target.value, i)}
           ></input>
           <Button className="bg__btn">Delete</Button>
