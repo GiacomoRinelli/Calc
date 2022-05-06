@@ -2,118 +2,122 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
+import Line from "./Components/Line";
 
 const App = () => {
+
   //Consts
   const [rows, setRows] = useState([
     {
-      sign: "+",
-      num: " ",
-      off: false,
-      disableBtnName : "Disable"
+      operationSign: "+",
+      value: " ",
+      isOff: false,
+      disableBtnName: "Disable",
     },
   ]);
 
-  //const [disableBtnName, setdisableBtnName] = useState("Disable");
 
-  const [sum, setSum] = useState(0);
+  const [displayedRes, setDisplayedRes] = useState(0);
 
   /* rowAddHandler handles the events, whenever a click on the 'Add Row' button occurs. 
      it creates a new row, giving some std values */
 
   const rowAddHandler = () => {
     var newRow = {
-      sign: "+",
-      num: " ",
-      off: false,
+      operationSign: "+",
+      value: " ",
+      isOff: false,
       disableBtnName: "Disable",
     };
 
     setRows((old) => old.concat(newRow));
   };
 
-  /* To comment */
+  /* valChangeHandler updates the numeric value which has been input by the user */
 
   const valChangeHandler = (v, i) => {
     let newRows = [...rows];
-    let newRow = { ...newRows[i], num: v };
+    let newRow = { ...newRows[i], value: v };
     newRows[i] = newRow;
     setRows(newRows);
   };
 
-  /* To comment */
-  const signChangeHandler = (s, i) => {
+
+  /* opSignChangeHandler updates the operation sign variation */
+
+  const opSignChangeHandler = (s, i) => {
     let newRows = [...rows];
-    let newRow = { ...newRows[i], sign: s };
+    let newRow = { ...newRows[i], operationSign: s };
     newRows[i] = newRow;
     setRows(newRows);
   };
 
-  /* To comment */
+
+  /* disablingHandler as the name suggests, handles the variations of the possible use of a line, updating with
+     "Enable" / "Disable", depending on which state it is atm */
+
   const disablingHandler = (i) => {
     let newRows = [...rows];
-    newRows[i].off===true? (newRows[i].off = false) : (newRows[i].off = true);
-    
-    newRows[i].disableBtnName==="Disable"? (newRows[i].disableBtnName = "Enable"):(newRows[i].disableBtnName ="Disable");
+    newRows[i].isOff === true
+      ? (newRows[i].isOff = false)
+      : (newRows[i].isOff = true);
+    newRows[i].disableBtnName === "Disable"
+      ? (newRows[i].disableBtnName = "Enable")
+      : (newRows[i].disableBtnName = "Disable");
     setRows(newRows);
   };
+
+
+  /* deletionHandler updates the array deleting the desired row, utilizing filter method */
 
   const deletionHandler = (i) => {
-    let newRows = rows.filter((r,j) => j !== i);
-    
+    let newRows = rows.filter((r, j) => j !== i);
+
     setRows(newRows);
   };
 
-  /* To comment */
+  /* useEffect is utilized to keep the displayed result constantly re-rendered whenever some changes to the rows occur */
 
   useEffect(() => {
     let tot = 0;
+
     rows.forEach((r) => {
-      if (r.off !== true) {
-        if (r.sign === "+") {
-          tot += +r.num;
+      if (r.isOff !== true) {
+        if (r.operationSign === "+") {
+          tot += +r.value;
         } else {
-          tot -= r.num;
+          tot -= r.value;
         }
       }
     });
-    setSum(tot);
+
+    setDisplayedRes(tot);
   }, [rows]);
 
   return (
     <div className="bg">
       <div className="title">--- CALCULATOR ---</div>
 
-      {/* RowAdding */}
-      <button className="bg__addRowBtn" onClick={rowAddHandler}>
+      {/* RowAdding Button */}
+      <Button className="bg__addRowBtn" onClick={rowAddHandler}>
         Add Row
-      </button>
+      </Button>
 
       {rows.map((v, i) => (
-        /* Single row structure */
-        <div className="line">
-          <select
-            onChange={(event) => signChangeHandler(event.target.value, i)}
-          >
-            <option>+</option>
-            <option>-</option>
-          </select>
-          <input
-            type="number"
-            min="0"
-            onChange={(event) => valChangeHandler(event.target.value, i)}
-          ></input>
-          <Button className="bg__btn" onClick={() => deletionHandler(i)}>
-            Delete
-          </Button>
-          <Button className="bg__btn"   onClick={() => disablingHandler(i)}>
-           {rows[i].disableBtnName}
-          </Button>
-        </div>
+        /* Data flow to Line.js */
+        <Line
+          key={i}
+          i={i}
+          row={v}
+          opSignChangeHandler={opSignChangeHandler}
+          valChangeHandler={valChangeHandler}
+          disablingHandler={disablingHandler}
+          deletionHandler={deletionHandler}
+        />
       ))}
 
-      {/*Result handling*/}
-      <div className="bg__result"> Result is : {sum} </div>
+      {/* Displayed result handling */}
+      <div className="bg__result"> Result is : {displayedRes} </div>
     </div>
   );
 };
