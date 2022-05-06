@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
+import "../App.css";
+
 
 
 const Line = (props) => {
@@ -17,6 +19,7 @@ const Line = (props) => {
 
       <Form.Control
         type="number"
+        placeholder="Input number"
         min="0"
         onChange={(event) =>
           props.valChangeHandler(event.target.value, props.i)
@@ -36,7 +39,7 @@ const Line = (props) => {
       >
         {props.row.disableBtnName}
       </Button>
-      
+
     </div>
   );
 };

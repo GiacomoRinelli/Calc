@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import Line from "./Components/Line";
 
@@ -82,12 +81,11 @@ const App = () => {
     let tot = 0;
 
     rows.forEach((r) => {
-      if (r.isOff !== true) {
-        if (r.operationSign === "+") {
+      if (!r.isOff) {
+        if (r.operationSign === "+") 
           tot += +r.value;
-        } else {
+        else 
           tot -= r.value;
-        }
       }
     });
 
@@ -96,7 +94,7 @@ const App = () => {
 
   return (
     <div className="bg">
-      <div className="title">--- CALCULATOR ---</div>
+      <div className="title">React Calculator</div>
 
       {/* RowAdding Button */}
       <Button className="bg__addRowBtn" onClick={rowAddHandler}>
@@ -105,7 +103,7 @@ const App = () => {
 
       {rows.map((v, i) => (
         /* Data flow to Line.js */
-        <Line
+        <Line 
           key={i}
           i={i}
           row={v}
