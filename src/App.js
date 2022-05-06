@@ -10,8 +10,11 @@ const App = () => {
       sign: "+",
       num: " ",
       off: false,
+      disableBtnName : "Disable"
     },
   ]);
+
+  //const [disableBtnName, setdisableBtnName] = useState("Disable");
 
   const [sum, setSum] = useState(0);
 
@@ -23,6 +26,7 @@ const App = () => {
       sign: "+",
       num: " ",
       off: false,
+      disableBtnName: "Disable",
     };
 
     setRows((old) => old.concat(newRow));
@@ -48,13 +52,15 @@ const App = () => {
   /* To comment */
   const disablingHandler = (i) => {
     let newRows = [...rows];
-    let newRow = { ...newRows[i], off: true };
-    newRows[i] = newRow;
+    newRows[i].off===true? (newRows[i].off = false) : (newRows[i].off = true);
+    
+    newRows[i].disableBtnName==="Disable"? (newRows[i].disableBtnName = "Enable"):(newRows[i].disableBtnName ="Disable");
     setRows(newRows);
   };
 
   const deletionHandler = (i) => {
-    let newRows = rows.filter((r,j) => j !==i );
+    let newRows = rows.filter((r,j) => j !== i);
+    
     setRows(newRows);
   };
 
@@ -67,7 +73,7 @@ const App = () => {
         if (r.sign === "+") {
           tot += +r.num;
         } else {
-          tot = tot - r.num;
+          tot -= r.num;
         }
       }
     });
@@ -94,13 +100,14 @@ const App = () => {
           </select>
           <input
             type="number"
+            min="0"
             onChange={(event) => valChangeHandler(event.target.value, i)}
           ></input>
           <Button className="bg__btn" onClick={() => deletionHandler(i)}>
             Delete
           </Button>
-          <Button className="bg__btn" onClick={() => disablingHandler(i)}>
-            Disable
+          <Button className="bg__btn"   onClick={() => disablingHandler(i)}>
+           {rows[i].disableBtnName}
           </Button>
         </div>
       ))}
