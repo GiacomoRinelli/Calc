@@ -7,7 +7,7 @@ const App = () => {
   //Consts
   const [rows, setRows] = useState([
     {
-      op: 0,
+      sign: "+",
       num: " ",
       off: false,
     },
@@ -15,41 +15,64 @@ const App = () => {
 
   const [sum, setSum] = useState(0);
 
+  /* rowAddHandler handles the events, whenever a click on the 'Add Row' button occurs. 
+     it creates a new row, giving some std values */
+
   const rowAddHandler = () => {
     var newRow = {
-      op: 0,
-      num: ' ',
+      sign: "+",
+      num: " ",
       off: false,
     };
 
     setRows((old) => old.concat(newRow));
   };
 
+  /* To comment */
+
   const valChangeHandler = (v, i) => {
     let newRows = [...rows];
     let newRow = { ...newRows[i], num: v };
-    newRow[i] = newRow;
+    newRows[i] = newRow;
     setRows(newRows);
-    //calcSum(rows);
   };
 
- /* const calcSum = (rows) => {
-    let i, tot=0;
-    for(i=0; i<(rows.length); i++) {
-      tot += rows.num;
-    }
-    setSum(tot);
-  }; */
+  /* To comment */
+  const signChangeHandler = (s, i) => {
+    let newRows = [...rows];
+    let newRow = { ...newRows[i], sign: s };
+    newRows[i] = newRow;
+    setRows(newRows);
+  };
+
+  /* To comment */
+  const disablingHandler = (i) => {
+    let newRows = [...rows];
+    let newRow = { ...newRows[i], off: true };
+    newRows[i] = newRow;
+    setRows(newRows);
+  };
+
+  const deletionHandler = (i) => {
+    let newRows = rows.filter((r,j) => j !==i );
+    setRows(newRows);
+  };
+
+  /* To comment */
 
   useEffect(() => {
     let tot = 0;
     rows.forEach((r) => {
-      tot += r.num;
+      if (r.off !== true) {
+        if (r.sign === "+") {
+          tot += +r.num;
+        } else {
+          tot = tot - r.num;
+        }
+      }
     });
     setSum(tot);
   }, [rows]);
-
-  
 
   return (
     <div className="bg">
@@ -61,18 +84,24 @@ const App = () => {
       </button>
 
       {rows.map((v, i) => (
-        /* Single row */
+        /* Single row structure */
         <div className="line">
-          <select>
+          <select
+            onChange={(event) => signChangeHandler(event.target.value, i)}
+          >
             <option>+</option>
             <option>-</option>
           </select>
           <input
-            type= 'number'
+            type="number"
             onChange={(event) => valChangeHandler(event.target.value, i)}
           ></input>
-          <Button className="bg__btn">Delete</Button>
-          <Button className="bg__btn">Disable</Button>
+          <Button className="bg__btn" onClick={() => deletionHandler(i)}>
+            Delete
+          </Button>
+          <Button className="bg__btn" onClick={() => disablingHandler(i)}>
+            Disable
+          </Button>
         </div>
       ))}
 
