@@ -21,6 +21,8 @@ const Line = (props) => {
         type="number"
         placeholder="Input number"
         min="0"
+        disabled={props.row.isOff}
+        value={props.row.value}
         onChange={(event) =>
           props.valChangeHandler(event.target.value, props.i)
         }
