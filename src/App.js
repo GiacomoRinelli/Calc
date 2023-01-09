@@ -5,6 +5,8 @@ import Line from "./Components/Line";
 
 const App = () => {
 
+  //I've just added this comment to test the git push
+
   //Consts
   const [rows, setRows] = useState([
     {
@@ -14,7 +16,6 @@ const App = () => {
       disableBtnName: "Disable",
     },
   ]);
-
 
   const [displayedRes, setDisplayedRes] = useState(0);
 
